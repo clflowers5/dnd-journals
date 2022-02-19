@@ -1,6 +1,9 @@
 import { Navbar as BaseNavbar, Divider, ScrollArea } from '@mantine/core'
 import { FunctionComponent, useContext } from 'react'
 
+
+import NavbarEntry from '../NavbarEntry'
+
 import JournalEntriesContext from '../../context/JournalEntriesContext'
 import { JournalEntry } from '../../models/JournalEntry'
 
@@ -25,7 +28,9 @@ const Navbar: FunctionComponent<NavbarProps> = ({ journalEntries }) => {
         mr={-10}
         sx={{ paddingLeft: 10, paddingRight: 10 }}
       >
-        {journalEntries.map((entry, index) => <div key={`${index}-${entry.title}`}>{entry.title}</div>)}
+        {journalEntries.map((entry) =>
+          <NavbarEntry key={entry.slug} href={`/${entry.slug}`}>{entry.title}</NavbarEntry>
+        )}
       </BaseNavbar.Section>
     </BaseNavbar>
   )

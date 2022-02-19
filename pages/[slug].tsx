@@ -8,12 +8,18 @@ import { getJournalEntries } from '../api/contentful'
 
 import styles from '../styles/Home.module.css'
 import JournalEntriesContext from '../context/JournalEntriesContext'
+import { useRouter } from 'next/router'
+import { JournalEntry } from '../models/JournalEntry'
 
 interface HomeProps {
-  journalEntries: any
+  journalEntries: JournalEntry[]
 }
 
 const Home: NextPage<HomeProps> = ({ journalEntries }) => {
+  const router = useRouter()
+  const { slug } = router.query
+  const entryToDisplay = journalEntries.find(entry => entry.slug === slug)
+
   return (
     <JournalEntriesContext.Provider value={journalEntries}>
       <div className={styles.container}>
@@ -32,7 +38,9 @@ const Home: NextPage<HomeProps> = ({ journalEntries }) => {
             main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] },
           })}
         >
-          <div>foo bar baz</div>
+          {entryToDisplay && (
+            <div dangerouslySetInnerHTML={{ __html: entryToDisplay.body.join('') }}/>
+          )}
         </AppShell>
       </div>
     </JournalEntriesContext.Provider>
@@ -47,5 +55,14 @@ export async function getStaticProps() {
     }
   }
 }
+
+export async function getStaticPaths() {
+  const journalEntries = await getJournalEntries()
+  const paths = journalEntries.map((entry) => ({
+    params: { slug: entry.slug }
+  }))
+  return { paths, fallback: false }
+}
+
 
 export default Home

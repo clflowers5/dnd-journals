@@ -1,22 +1,32 @@
 import { ContentfulJournalEntry, getField, ParagraphContent } from './ContentfulJournalEntry'
+import slugify from 'slugify'
 
 export interface JournalEntry {
+  id: string
   body: string[]
   character: string
   logDate: string
   title: string
+  slug: string
 }
 
 function contentfulEntryToJournalEntry(data: ContentfulJournalEntry): JournalEntry {
-  const parsedBody = getField<ParagraphContent>('body', data)?.content.map(entry => {
+  const body = getField<ParagraphContent>('body', data)?.content.map(entry => {
     return entry.content.map(innerEntry => innerEntry.value)
-  }).flat()
+  }).flat() ?? []
+  const character = getField<string>('character', data) ?? ''
+  const title = getField<string>('title', data) ?? ''
+  const slug = `${slugify(character)}-${slugify(title)}`
+  const logDate = getField<string>('logDate', data) ?? ''
+  const id = data.sys.id
 
   return {
-    body: parsedBody ?? [],
-    character: getField<string>('character', data) ?? '',
-    logDate: getField<string>('logDate', data) ?? '',
-    title: getField<string>('title', data) ?? '',
+    id,
+    body,
+    character,
+    logDate,
+    title,
+    slug,
   }
 }
 

@@ -11,6 +11,9 @@ export interface ParagraphContent {
 }
 
 export interface ContentfulJournalEntry {
+  sys: {
+    id: string
+  },
   fields: {
     character: {
       "en-US": string
