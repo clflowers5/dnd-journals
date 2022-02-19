@@ -17,7 +17,6 @@ const NavbarEntry: FunctionComponent<NavbarEntryProps> = ({ href, children }) =>
           font-size: 1.25rem;
           padding-block: 0.5rem;
         `}
-        onClick={() => console.log('click')}
       >
         {children}
       </a>
