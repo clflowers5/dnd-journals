@@ -48,7 +48,7 @@ const JournalEntriesContainer: FunctionComponent<JournalEntriesContainerProps> =
             `}
           >
             {selectedJournalEntry && (
-              <JournalEntryText rawText={selectedJournalEntry.body.join('')}/>
+              <JournalEntryText rawText={selectedJournalEntry.body}/>
             )}
           </div>
         </AppShell>

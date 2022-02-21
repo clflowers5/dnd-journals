@@ -3,6 +3,7 @@ import { getJournalEntries } from '../api/contentful'
 import { JournalEntry } from '../models/JournalEntry'
 import JournalEntriesContainer from '../components/JournalEntriesContainer'
 import { useRouter } from 'next/router'
+import AppContext from '../context/AppContext'
 
 interface HomeProps {
   journalEntries: JournalEntry[]
@@ -12,10 +13,12 @@ const Home: NextPage<HomeProps> = ({ journalEntries }) => {
   const router = useRouter()
   const { slug } = router.query
   return (
-    <JournalEntriesContainer
-      journalEntries={journalEntries}
-      selectedEntrySlug={slug as string | undefined} // kind of gross
-    />
+    <AppContext.Provider value={{ activeSlug: slug as string | undefined }}>
+      <JournalEntriesContainer
+        journalEntries={journalEntries}
+        selectedEntrySlug={slug as string | undefined} // kind of gross
+      />
+    </AppContext.Provider>
   )
 }
 

@@ -1,34 +1,28 @@
 import { FunctionComponent } from 'react'
-import { css, Global } from '@emotion/react'
+import { css } from '@emotion/react'
 
 interface JournalEntryTextProps {
-  rawText: string
+  rawText: string | string[]
 }
 
 const JournalEntryText: FunctionComponent<JournalEntryTextProps> = ({ rawText }) => {
   return (
     <>
-      <Global
-        styles={css`
-          @font-face {
-            font-family: 'james_fajardoregular';
-            src: url('/fajardo-webfont.woff2') format('woff2'),
-            url('/fajardo-webfont.woff') format('woff');
-            font-weight: normal;
-            font-style: normal;
-
-          }
-          color: hotpink !important;
-        `}
-      />
       <div
         css={css`
           font-family: 'james_fajardoregular';
           font-size: 4rem;
+          font-weight: normal;
+          font-style: normal;
           line-height: 1.25;
         `}
-        dangerouslySetInnerHTML={{ __html: rawText }}
-      />
+      >
+        {Array.isArray(rawText) ? (
+          rawText.map((entry, index) => <div key={`${entry}-${index}`}>{entry}</div>)
+        ) : (
+          <div>{rawText}</div>
+        )}
+      </div>
     </>
   )
 }
