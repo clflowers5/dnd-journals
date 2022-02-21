@@ -1,5 +1,7 @@
+const debug = require('debug')('api-contentful')
 import { contentfulEntryToJournalEntry, JournalEntry } from '../../models/JournalEntry'
 import { ContentfulJournalEntry } from '../../models/ContentfulJournalEntry'
+
 
 const BASE_URL = `https://api.contentful.com/spaces/${process.env.CONTENTFUL_SPACE_ID}/environments/${process.env.CONTENTFUL_ENVIRONMENT_ID}`
 
@@ -18,7 +20,23 @@ async function getRawJournalEntries() {
 
 async function getJournalEntries(): Promise<JournalEntry[]> {
   const journalEntries = await getRawJournalEntries()
-  return journalEntries.items.map((entry: ContentfulJournalEntry) => contentfulEntryToJournalEntry(entry))
+  debug('raw journal entries:', journalEntries)
+
+  const entries = journalEntries.items
+    .map((entry: ContentfulJournalEntry) => contentfulEntryToJournalEntry(entry))
+    .sort((a: JournalEntry, b: JournalEntry) => {
+      // todo: cf - this may need additional work with actual dates
+      if (!a.logDate || a.logDate > b.logDate) {
+        return -1
+      } else if (a.logDate < b.logDate) {
+        return 1
+      } else {
+        return 0
+      }
+    })
+
+  debug('transformed journal entries:', entries)
+  return entries
 }
 
 export {
