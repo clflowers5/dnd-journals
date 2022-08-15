@@ -20,7 +20,7 @@ const JournalEntryText: FunctionComponent<JournalEntryTextProps> = ({ rawText })
         {Array.isArray(rawText) ? (
           rawText.map((entry, index) => <div key={`${entry}-${index}`}>{entry}</div>)
         ) : (
-          <div>{rawText}</div>
+          <div dangerouslySetInnerHTML={{ __html: rawText }}/>
         )}
       </div>
     </>

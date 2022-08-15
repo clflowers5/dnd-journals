@@ -1,11 +1,14 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from "next";
 
 type HealthResponse = {
-  message: string
-}
+  message: string;
+};
 
-const handler = (req: NextApiRequest, res: NextApiResponse<HealthResponse>): void => {
-  res.status(200).json({ message: 'Healthy!' })
-}
+const handler = (
+  req: NextApiRequest,
+  res: NextApiResponse<HealthResponse>
+): void => {
+  res.status(200).json({ message: "Healthy!" });
+};
 
-export default handler
+export default handler;

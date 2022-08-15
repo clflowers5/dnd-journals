@@ -1,4 +1,4 @@
-import { Navbar as BaseNavbar, Divider, ScrollArea } from '@mantine/core'
+import { Navbar as BaseNavbar, ScrollArea } from '@mantine/core'
 import { FunctionComponent, useContext } from 'react'
 import { css } from '@emotion/react'
 
@@ -18,7 +18,7 @@ const Navbar: FunctionComponent<NavbarProps> = ({ journalEntries }) => {
   const { activeSlug } = useContext(AppContext)
   return (
     /* 95vh used in conjunction with 5vh on the Header component */
-    <BaseNavbar width={{ base: MIN_WIDTH }} padding="xs" sx={{ height: '95vh' }}>
+    <BaseNavbar width={{ base: MIN_WIDTH }} sx={{ height: '95vh' }}>
       <BaseNavbar.Section mt="sm" mb="sm">
         Haarvey {/* todo: cf - support for multiple toons? who knows. */}
       </BaseNavbar.Section>
@@ -26,7 +26,6 @@ const Navbar: FunctionComponent<NavbarProps> = ({ journalEntries }) => {
         grow
         component={ScrollArea}
         ml={-10}
-        mr={-10}
         sx={{ paddingLeft: 10, paddingRight: 10 }}
       >
         {journalEntries.map((entry) =>
@@ -34,6 +33,7 @@ const Navbar: FunctionComponent<NavbarProps> = ({ journalEntries }) => {
             <div
               css={css`
                 font-size: 1rem;
+                font-style: italic;
               `}
             >
               {entry.logDate ? new Date(entry.logDate).toDateString() : null}

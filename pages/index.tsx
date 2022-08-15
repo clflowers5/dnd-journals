@@ -1,22 +1,24 @@
-import type { NextPage } from 'next'
+import type { NextPage } from "next";
 
-import JournalEntriesContainer from '../components/JournalEntriesContainer'
+import JournalEntriesContainer from "../components/JournalEntriesContainer";
 
-import { getJournalEntries } from '../api/contentful'
+import { getJournalEntries } from "../api/contentful";
 
 interface HomeProps {
-  journalEntries: any
+  journalEntries: any;
 }
 
-const Home: NextPage<HomeProps> = ({ journalEntries }) => <JournalEntriesContainer journalEntries={journalEntries}/>
+const Home: NextPage<HomeProps> = ({ journalEntries }) => (
+  <JournalEntriesContainer journalEntries={journalEntries} />
+);
 
 export async function getStaticProps() {
-  const journalEntries = await getJournalEntries()
+  const journalEntries = await getJournalEntries();
   return {
     props: {
-      journalEntries
-    }
-  }
+      journalEntries,
+    },
+  };
 }
 
-export default Home
+export default Home;

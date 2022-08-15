@@ -17,7 +17,8 @@ const NavbarEntry: FunctionComponent<NavbarEntryProps> = ({ active, href, childr
           display: block;
           font-size: 1.25rem;
           line-height: 1.5rem;
-          padding-block: 0.5rem;
+          padding-block-start: 0.75rem;
+          padding-block-end: 0.75rem;
           padding-inline-start: 1rem;
           margin-inline-start: 0.75rem;
           border-left: solid 1px ${active ? '#0f172a' : '#dee2e6'};
